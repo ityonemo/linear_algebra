@@ -16,6 +16,25 @@ A Linear Algebra Library for Elixir inspired by Julia
 - Work towards differentiable programming
 - Work towards machine learning applications
 
+## Example:
+
+Basic linear algebra:
+
+```
+iex> use LinearAlgebra
+iex> ~M[1.0 2.0
+        2.0 1.0] * ~V[1.0, 2.0]
+~V[5.0, 4.0]
+```
+
+Dot product (with householder notation):
+```
+iex> use LinearAlgebra
+iex> ~V[1.0, 2.0]t * ~V[1.0, 2.0]
+5.0
+```
+
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed

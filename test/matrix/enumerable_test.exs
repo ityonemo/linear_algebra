@@ -3,11 +3,9 @@ defmodule LinearAlgebraTest.Matrix.EnumerableTest do
 
   use LinearAlgebra
 
-  @base_matrix ~M"""
-  1.0 4.0
-  2.0 5.0
-  3.0 6.0
-  """
+  @base_matrix ~M[1.0 4.0
+                  2.0 5.0
+                  3.0 6.0]
 
   test "enumeration works as column-major" do
     assert Enum.to_list(@base_matrix) == [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]

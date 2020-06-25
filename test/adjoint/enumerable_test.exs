@@ -3,13 +3,11 @@ defmodule LinearAlgebraTest.Adjoint.EnumerableTest do
 
   use LinearAlgebra
 
-  @adj_vector adj(~V"1.0, 2.0, 3.0")
+  @adj_vector adj(~V[1.0, 2.0, 3.0])
 
-  @adj_matrix adj(~M"""
-  1.0 4.0
-  2.0 5.0
-  3.0 6.0
-  """)
+  @adj_matrix adj(~M[1.0 4.0
+                     2.0 5.0
+                     3.0 6.0])
 
   describe "for Vectors" do
     test "enumerating the adjoint is as normal" do

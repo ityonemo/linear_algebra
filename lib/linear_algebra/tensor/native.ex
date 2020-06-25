@@ -129,7 +129,6 @@ defimpl Enumerable, for: LinearAlgebra.Tensor.Native do
   def slice(_), do: {:error, __MODULE__}
 end
 
-
 defimpl VectorSpace, for: LinearAlgebra.Tensor.Native do
 
   import Kernel, except: [+: 2, -: 2, *: 2, "/": 2]
@@ -192,5 +191,12 @@ defimpl VectorSpace, for: LinearAlgebra.Tensor.Native do
   end
   def adj(matrix = %{dims: {rows, cols}}) do
     %Adjoint{dims: {cols, rows}, data: matrix}
+  end
+end
+
+defimpl Inspect, for: LinearAlgebra.Tensor.Native do
+  import Inspect.Algebra
+  def inspect(%{dims: {_singleton}, data: data}, opts) do
+    concat("~V", to_doc(data, opts))
   end
 end

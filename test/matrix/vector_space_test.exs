@@ -3,16 +3,13 @@ defmodule LinearAlgebraTest.Matrix.VectorSpaceTest do
 
   use LinearAlgebra
 
-  @base_matrix ~M"""
-  1.0 4.0
-  2.0 5.0
-  3.0 6.0
-  """
-  @double_matrix ~M"""
-  2.0 8.0
-  4.0 10.0
-  6.0 12.0
-  """
+  @base_matrix ~M[1.0 4.0
+                  2.0 5.0
+                  3.0 6.0]
+
+  @double_matrix ~M[2.0 8.0
+                    4.0 10.0
+                    6.0 12.0]
 
   describe "for Matrix with native backend, the math operation" do
     test "basic matrix addition works" do
@@ -37,20 +34,16 @@ defmodule LinearAlgebraTest.Matrix.VectorSpaceTest do
     end
 
     test "basic matrix-vector multiplication works" do
-       assert ~V"9.0, 12.0, 15.0" == @base_matrix * ~V"1.0, 2.0"
+       assert ~V[9.0, 12.0, 15.0] == @base_matrix * ~V[1.0, 2.0]
     end
 
     test "basic matrix-matrix multiplication works" do
-      rhs = ~M"""
-        1.0 3.0 5.0
-        2.0 4.0 6.0
-      """
+      rhs = ~M[1.0 3.0 5.0
+               2.0 4.0 6.0]
 
-      res = ~M"""
-         9.0 19.0 29.0
-        12.0 26.0 40.0
-        15.0 33.0 51.0
-      """
+      res = ~M[ 9.0 19.0 29.0
+               12.0 26.0 40.0
+               15.0 33.0 51.0]
 
       assert res == @base_matrix * rhs
     end
