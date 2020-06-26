@@ -36,7 +36,7 @@ defimpl VectorSpace, for: LinearAlgebra.Adjoint do
   alias LinearAlgebra.Adjoint
 
   def %{dims: dim, data: v1} + %Adjoint{dims: dim, data: v2} do
-    %Adjoint{dims: dim, data: Arithmetic.+(v1, v2)}
+    %Adjoint{dims: dim, data: VectorSpace.+(v1, v2)}
   end
 
   def %Adjoint{dims: {1, dim}, data: v1} * (v2 = %{dims: {dim}}) do

@@ -1,5 +1,5 @@
 defmodule LinearAlgebraTest.Adjoint.EnumerableTest do
-  use ExUnit.Case
+    use ExUnit.Case, async: true
 
   use LinearAlgebra
 

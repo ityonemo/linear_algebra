@@ -21,6 +21,7 @@ end
 defimpl VectorSpace, for: Integer do
   import Kernel, except: [+: 2, *: 2, -: 2, "/": 2]
   import LinearAlgebra.Tensor
+  import Complex
 
   def a + b, do: Kernel.+(a, b)
   def a - b, do: Kernel.-(a, b)
@@ -29,6 +30,7 @@ defimpl VectorSpace, for: Integer do
   # multiplication is polymorphic, because it's commutative
   # across scalar multiplication.
   def a * b when is_tensor(b), do: VectorSpace.*(b, a)
+  def a * b when is_complex(b), do: VectorSpace.*(b, a)
   def a * b, do: Kernel.*(a, b)
 
   # the adjoint of an integer is itself.
@@ -38,6 +40,7 @@ end
 defimpl VectorSpace, for: Float do
   import Kernel, except: [+: 2, *: 2, -: 2, "/": 2]
   import LinearAlgebra.Tensor
+  import Complex
 
   def a + b, do: Kernel.+(a, b)
   def a - b, do: Kernel.-(a, b)
@@ -46,6 +49,7 @@ defimpl VectorSpace, for: Float do
   # multiplication is polymorphic, because it's commutative
   # across scalar multiplication.
   def a * b when is_tensor(b), do: VectorSpace.*(b, a)
+  def a * b when is_complex(b), do: VectorSpace.*(b, a)
   def a * b, do: Kernel.*(a, b)
 
   # the adjoint of a float is itself

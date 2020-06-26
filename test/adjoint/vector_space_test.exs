@@ -1,5 +1,5 @@
 #defmodule LinearAlgebraTest.Matrix.VectorSpaceTest do
-#  use ExUnit.Case
+#    use ExUnit.Case, async: true
 #
 #  use LinearAlgebra
 #

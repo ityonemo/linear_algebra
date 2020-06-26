@@ -2,7 +2,9 @@ defmodule LinearAlgebra do
   defmacro __using__(_) do
     quote do
       alias LinearAlgebra.{Vector, Matrix, Adjoint}
-      import Kernel, except: [+: 2, *: 2, -: 2, "/": 2]
+
+      # note we're taking over sigil_C for complex numbers.
+      import Kernel, except: [+: 2, *: 2, -: 2, "/": 2, sigil_C: 2]
       import VectorSpace
       import Vector
       import Matrix
