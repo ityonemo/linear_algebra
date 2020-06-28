@@ -151,8 +151,8 @@ defimpl VectorSpace, for: LinearAlgebra.Tensor.Native do
     }
   end
 
-  def vector * value when is_scalar(value) do
-    %{vector | data: Enum.map(vector.data, &VectorSpace.*(&1, value))}
+  def tensor * value when is_scalar(value) do
+    %{tensor | data: Enum.map(tensor.data, &VectorSpace.*(&1, value))}
   end
 
   # special case: adjoint vector outer product.  Promote the vector to an
@@ -176,8 +176,8 @@ defimpl VectorSpace, for: LinearAlgebra.Tensor.Native do
     end
   end
 
-  def vector / value when is_scalar(value) do
-    %{vector | data: Enum.map(vector.data, &VectorSpace./(&1, value))}
+  def tensor / value when is_scalar(value) do
+    %{tensor | data: Enum.map(tensor.data, &VectorSpace./(&1, value))}
   end
 
   defp concat(d1, d2) do
@@ -192,11 +192,18 @@ defimpl VectorSpace, for: LinearAlgebra.Tensor.Native do
   def adj(matrix = %{dims: {rows, cols}}) do
     %Adjoint{dims: {cols, rows}, data: matrix}
   end
+
+  def left_scalar_multiply(tensor, scalar) do
+    %{tensor | data: Enum.map(tensor.data, &VectorSpace.*(scalar, &1))}
+  end
 end
 
 defimpl Inspect, for: LinearAlgebra.Tensor.Native do
   import Inspect.Algebra
   def inspect(%{dims: {_singleton}, data: data}, opts) do
     concat("~V", to_doc(data, opts))
+  end
+  def inspect(%{dims: dims}, opts) do
+    concat(["#Tensor<dims: ",to_doc(dims, opts),">"])
   end
 end

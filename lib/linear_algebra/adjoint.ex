@@ -28,18 +28,42 @@ defmodule LinearAlgebra.Adjoint do
     child_mod.fetch(data, {idx_2, idx_1})
   end
 
+  require LinearAlgebra.Tensor
+
+  defguard is_adjoint(adjoint) when
+    :erlang.map_get(:__struct__, adjoint) == __MODULE__ and
+    LinearAlgebra.Tensor.is_tensor(:erlang.map_get(:data, adjoint))
+
 end
 
 defimpl VectorSpace, for: LinearAlgebra.Adjoint do
   import Kernel, except: [+: 2, *: 2]
 
   alias LinearAlgebra.Adjoint
+  require LinearAlgebra
+  require Adjoint
 
   def %{dims: dim, data: v1} + %Adjoint{dims: dim, data: v2} do
     %Adjoint{dims: dim, data: VectorSpace.+(v1, v2)}
   end
 
-  def %Adjoint{dims: {1, dim}, data: v1} * (v2 = %{dims: {dim}}) do
+  def %{dims: dim, data: v1} - %Adjoint{dims: dim, data: v2} do
+    %Adjoint{dims: dim, data: VectorSpace.-(v1, v2)}
+  end
+
+  def adjoint / value when LinearAlgebra.is_scalar(value) do
+    %{adjoint | data: VectorSpace./(adjoint.data, value)}
+  end
+
+  def adjoint * value when LinearAlgebra.is_scalar(value) do
+    %{adjoint | data: VectorSpace.*(adjoint.data, value)}
+  end
+  def (%{data: left}) * (value = %{data: right})
+      when Adjoint.is_adjoint(value) do
+    VectorSpace.adj(VectorSpace.*(right, left))
+  end
+
+  def %{dims: {1, dim}, data: v1} * (v2 = %{dims: {dim}}) do
     v1
     |> Enum.zip(v2)
     |> Enum.reduce(fn
@@ -61,6 +85,12 @@ defimpl VectorSpace, for: LinearAlgebra.Adjoint do
         |> VectorSpace.+(c)
     end)
   end
+
+  def left_scalar_multiply(adjoint, scalar) do
+    %{adjoint | data: VectorSpace.*(scalar, adjoint.data)}
+  end
+
+  def adj(%{data: data}), do: data
 end
 
 defimpl Enumerable, for: LinearAlgebra.Adjoint do

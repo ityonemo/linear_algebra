@@ -15,7 +15,7 @@ defmodule Complex do
   def i(:float), do: %__MODULE__{re: 0.0, im: 1.0}
 
   defguard is_complex(value) when :erlang.map_get(:__struct__, value) == Complex
-  defguard is_real(value) when is_float(value) or is_integer(value)
+  defguard is_real(value) when is_number(value)
 
   @signs [?-, ?+]
   def parse(content) do
@@ -36,6 +36,10 @@ defmodule Complex do
   end
 
 
+  @doc """
+  Overrides elixir Standard library's sigil_C to emit a complex number.
+  You weren't using unsusbstituted charlists anyways.
+  """
   defmacro sigil_C({:<<>>, _, [content]}, _) do
     case Complex.parse(content) do
       {cplx, ""} -> Macro.escape(cplx)
@@ -117,5 +121,9 @@ defimpl VectorSpace, for: Complex do
   # the adjoint of a complex number is its complex conjugate
   def adj(src) do
     %Complex{re: src.re, im: VectorSpace.-(src.im)}
+  end
+
+  def left_scalar_multiply(cplx, scalar) do
+    %Complex{re: scalar * cplx, im: scalar * cplx}
   end
 end

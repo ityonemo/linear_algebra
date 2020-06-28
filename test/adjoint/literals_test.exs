@@ -28,4 +28,16 @@ defmodule LinearAlgebraTest.Adjoint.LiteralsTest do
       } = adjoint_literal
     end
   end
+
+  describe "is_adjoint guard" do
+    test "classifies vectors correctly" do
+      assert is_adjoint(~V[1.0, 2.0]t)
+      refute is_adjoint(~V[1.0, 2.0])
+    end
+
+    test "classifies matrices correctly" do
+      assert is_adjoint(~M[1.0 2.0]t)
+      refute is_adjoint(~M[1.0 2.0])
+    end
+  end
 end

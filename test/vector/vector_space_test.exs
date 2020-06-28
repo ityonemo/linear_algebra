@@ -1,6 +1,5 @@
 defmodule LinearAlgebraTest.Vector.VectorSpaceTest do
-    use ExUnit.Case, async: true
-
+  use ExUnit.Case, async: true
   use LinearAlgebra
 
   describe "for Vector with no backend, the math operation" do
