@@ -1,3 +1,6 @@
+NOTE: this project is now archived.  I won't be supporting it, but please feel free to fork it and work on it!
+
+
 # LinearAlgebra
 
 A Linear Algebra Library for Elixir inspired by Julia
